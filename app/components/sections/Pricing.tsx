@@ -171,13 +171,21 @@ export default function Pricing() {
           delay={0.25}
           className="mt-10 text-center text-sm text-white/45"
         >
-          Need something custom? Email{" "}
-          <a
-            href="mailto:hello@sellmore.studio"
-            className="text-white/70 underline underline-offset-4 hover:text-white"
-          >
-            hello@sellmore.studio
-          </a>
+Need something custom? Email{" "}
+<a
+  href="mailto:sellmorestudiosupport@gmail.com"
+  className="text-white/70 underline underline-offset-4 hover:text-white"
+>
+  sellmorestudiosupport@gmail.com
+</a>
+{" "}or{" "}
+<a
+  href="https://wa.me/61421435858"
+  target="_blank"
+  className="text-green-400 underline underline-offset-4 hover:text-green-300"
+>
+  WhatsApp us
+</a>
         </Reveal>
       </Container>
     </section>

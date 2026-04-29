@@ -41,7 +41,7 @@ export default function FinalCTA() {
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="/get-image" className="btn-primary">
-                Get your first image
+                Get your first sales image
                 <svg
                   viewBox="0 0 20 20"
                   className="h-4 w-4"

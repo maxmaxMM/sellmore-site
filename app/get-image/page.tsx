@@ -17,7 +17,7 @@ const businessTypes = [
 ];
 
 const WHATSAPP_URL =
-  "https://wa.me/61400000000?text=Hi%20SellMore%20Studio%20%E2%80%94%20I%27d%20like%20my%20first%20marketing%20image.";
+  "https://wa.me/61421435858?text=Hi%20SellMore%20Studio%20%E2%80%94%20I%27d%20like%20my%20first%20marketing%20image.";
 
 // Google Forms integration — uses the edit-form document id (/d/<FORM_ID>/formResponse).
 const GOOGLE_FORM_ACTION =
@@ -93,7 +93,7 @@ export default function GetImagePage() {
                       24-hour turnaround
                     </span>
                     <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-gradient">
-                      Get your first image
+                      Get your first sales image
                     </h1>
                     <p className="mx-auto mt-3 max-w-md text-[15px] text-white/60">
                       Upload your photo. We&apos;ll turn it into a

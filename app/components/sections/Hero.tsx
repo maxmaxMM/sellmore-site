@@ -204,7 +204,7 @@ export default function Hero() {
               className="mt-7 flex flex-wrap gap-3"
             >
               <Link href="/get-image" className="btn-primary">
-                Get your first image
+                Get your first sales image
                 <svg
                   viewBox="0 0 20 20"
                   className="h-4 w-4"

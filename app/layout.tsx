@@ -19,6 +19,12 @@ export const metadata: Metadata = {
   description:
     "Simple marketing images for local businesses. Done for you. Ready in 24 hours.",
   metadataBase: new URL("https://sellmore.studio"),
+  icons: {
+    icon: "/favicon.png?v=10",
+    shortcut: "/favicon.png?v=10",
+    apple: "/favicon.png?v=10",
+  },
+
   openGraph: {
     title: "SellMore Studio",
     description:

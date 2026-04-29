@@ -33,7 +33,7 @@ export default function Nav() {
           : "bg-transparent"
       }`}
     >
-      <Container className="flex h-16 items-center justify-between gap-6">
+      <Container className="flex h-30 items-center justify-between gap-6 pt-2">
         <Link href="/" aria-label="SellMore Studio home">
           <Logo />
         </Link>
@@ -55,7 +55,7 @@ export default function Nav() {
             href="/get-image"
             className="btn-primary !py-2.5 !px-4 text-[13px]"
           >
-            Get your first image
+            Get your first sales image
             <svg
               viewBox="0 0 20 20"
               className="h-3.5 w-3.5"
@@ -121,7 +121,7 @@ export default function Nav() {
               onClick={() => setOpen(false)}
               className="btn-primary mt-2 w-full"
             >
-              Get your first image
+              Get your first sales image
             </Link>
           </Container>
         </div>
