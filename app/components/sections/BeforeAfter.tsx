@@ -15,21 +15,23 @@ export default function BeforeAfter() {
                 Before &amp; After
               </span>
               <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-[-0.02em] leading-[1.04]">
-                <span className="text-white">Same photo.</span>
+                <span className="text-white">Slow replies.</span>
                 <br />
-                <span className="text-brand-gradient">Better results.</span>
+                <span className="text-brand-gradient">Missed leads.</span>
               </h2>
               <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-white/65">
-                Turn plain phone photos into marketing images that get more{" "}
-                <span className="font-semibold text-white">bookings</span>,{" "}
-                <span className="font-semibold text-white">calls</span>, and{" "}
-                <span className="font-semibold text-white">customers</span>.
+                Most local businesses lose customers because they reply too late
+                and don&apos;t follow up. SellMoreStudio helps you respond
+                instantly and recover{" "}
+                <span className="font-semibold text-white">missed calls</span>,{" "}
+                <span className="font-semibold text-white">enquiries</span>, and{" "}
+                <span className="font-semibold text-white">bookings</span>.
               </p>
 
               <div className="mt-5 grid max-w-xs grid-cols-3 gap-2">
-                <Stat value="2.8×" label="More clicks" />
-                <Stat value="+37%" label="Bookings" />
-                <Stat value="24h" label="Turnaround" />
+                <Stat value="Instant" label="Replies" />
+                <Stat value="+Reviews" label="Google" />
+                <Stat value="24/7" label="Follow-up" />
               </div>
             </div>
 

@@ -94,14 +94,14 @@ export default function GetStartedPage() {
                   <div className="text-center">
                     <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-white/70">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#60a5fa] shadow-[0_0_12px_2px_rgba(96,165,250,0.8)]" />
-                      Get your first sales image
+                      Get started
                     </span>
                     <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-gradient">
                       Tell us about your business
                     </h1>
                     <p className="mx-auto mt-3 max-w-md text-white/60">
-                      Upload one photo and we&apos;ll send your polished preview
-                      within 24 hours.
+                      We&apos;ll help you set up review requests, instant replies
+                      and follow-up automation for your business.
                     </p>
                   </div>
                 </Reveal>

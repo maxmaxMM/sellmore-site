@@ -76,8 +76,25 @@ const slots: CardSlot[] = [
 
 const featureIcons = [
   {
-    title: "Fast turnaround",
-    meta: "Ready in 24h",
+    title: "Google reviews",
+    meta: "Ask automatically",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Instant replies",
+    meta: "SMS & email",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -93,27 +110,8 @@ const featureIcons = [
     ),
   },
   {
-    title: "Built to sell",
-    meta: "Designed for results",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <circle cx="12" cy="12" r="9" />
-        <circle cx="12" cy="12" r="5" />
-        <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-      </svg>
-    ),
-  },
-  {
-    title: "All industries",
-    meta: "We've got you covered",
+    title: "Missed leads",
+    meta: "Recovered fast",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -124,10 +122,7 @@ const featureIcons = [
         strokeLinejoin="round"
         aria-hidden
       >
-        <rect x="3" y="3" width="7" height="7" rx="1.5" />
-        <rect x="14" y="3" width="7" height="7" rx="1.5" />
-        <rect x="3" y="14" width="7" height="7" rx="1.5" />
-        <rect x="14" y="14" width="7" height="7" rx="1.5" />
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
       </svg>
     ),
   },
@@ -167,7 +162,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#60a5fa] shadow-[0_0_10px_2px_rgba(96,165,250,0.8)]" />
-              Marketing Images That Sell
+              Built for Local Businesses
             </motion.div>
 
             <motion.h1
@@ -176,25 +171,19 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.05 }}
               className="mt-5 text-[2.75rem] leading-[1.02] sm:text-[3.5rem] lg:text-[4rem] font-bold tracking-[-0.03em]"
             >
-              <span className="text-white">We turn your</span>
+              <span className="text-white">Get more reviews.</span>
               <br />
-              <span className="text-white">photos into</span>
-              <br />
-              <span className="text-brand-gradient">customers.</span>
+              <span className="text-brand-gradient">Never miss a lead.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="mt-5 max-w-md text-[15px] leading-relaxed text-white/65"
+              className="mt-5 max-w-lg text-[15px] leading-relaxed text-white/65"
             >
-              Simple marketing images for local businesses. Done for you.
-              <br className="hidden sm:block" /> Ready in{" "}
-              <span className="font-semibold text-[#93c5fd] underline decoration-[#60a5fa]/60 underline-offset-[5px] decoration-2">
-                24 hours
-              </span>
-              .
+              Automated Google review requests, instant replies, missed-call
+              recovery and follow-up systems for local businesses.
             </motion.p>
 
             <motion.div
@@ -203,8 +192,8 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.25 }}
               className="mt-7 flex flex-wrap gap-3"
             >
-              <Link href="/get-image" className="btn-primary">
-                Get your first sales image
+              <Link href="/get-started" className="btn-primary">
+                Get started
                 <svg
                   viewBox="0 0 20 20"
                   className="h-4 w-4"
@@ -219,8 +208,8 @@ export default function Hero() {
                   <path d="M12 5l5 5-5 5" />
                 </svg>
               </Link>
-              <Link href="#work" className="btn-secondary">
-                See examples
+              <Link href="#how-it-works" className="btn-secondary">
+                See how it works
               </Link>
             </motion.div>
 

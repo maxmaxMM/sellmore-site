@@ -1,4 +1,5 @@
 import Hero from "./components/sections/Hero";
+import Benefits from "./components/sections/Benefits";
 import CategoryBar from "./components/sections/CategoryBar";
 import BeforeAfter from "./components/sections/BeforeAfter";
 import Testimonials from "./components/sections/Testimonials";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Benefits />
       <CategoryBar />
       <BeforeAfter />
       <Testimonials />

@@ -52,10 +52,10 @@ export default function Nav() {
 
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/get-image"
+            href="/get-started"
             className="btn-primary !py-2.5 !px-4 text-[13px]"
           >
-            Get your first sales image
+            Get started
             <svg
               viewBox="0 0 20 20"
               className="h-3.5 w-3.5"
@@ -117,11 +117,11 @@ export default function Nav() {
               </Link>
             ))}
             <Link
-              href="/get-image"
+              href="/get-started"
               onClick={() => setOpen(false)}
               className="btn-primary mt-2 w-full"
             >
-              Get your first sales image
+              Get started
             </Link>
           </Container>
         </div>

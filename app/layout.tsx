@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SellMore Studio — We turn your photos into customers",
+  title: "SellMore Studio — Get more reviews. Never miss a lead.",
   description:
-    "Simple marketing images for local businesses. Done for you. Ready in 24 hours.",
+    "Automated Google review requests, instant replies, missed-call recovery and follow-up systems for local businesses.",
   metadataBase: new URL("https://sellmore.studio"),
   icons: {
     icon: "/favicon.png?v=10",
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "SellMore Studio",
+    title: "SellMore Studio — Get more reviews. Never miss a lead.",
     description:
-      "Simple marketing images for local businesses. Done for you. Ready in 24 hours.",
+      "Automated Google review requests, instant replies, missed-call recovery and follow-up systems for local businesses.",
     type: "website",
   },
 };

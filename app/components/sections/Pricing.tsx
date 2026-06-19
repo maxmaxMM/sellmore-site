@@ -3,56 +3,31 @@ import Container from "../Container";
 import Reveal from "../Reveal";
 import SectionHeading from "../SectionHeading";
 
-type MonthlyPlan = {
-  name: string;
-  price: number;
-  summary: string;
-  features: string[];
-  highlight?: boolean;
-  cta: string;
-};
-
 const setupFeatures = [
   "System setup",
   "Automation setup",
-  "Templates",
-  "Pipeline setup",
+  "Google review request workflow",
+  "SMS & email templates",
+  "Enquiry pipeline",
   "Testing",
 ];
 
-const monthlyPlans: MonthlyPlan[] = [
-  {
-    name: "Follow-Up System",
-    price: 299,
-    summary: "Automated follow-up only — no short videos included.",
-    features: [
-      "Automated email & SMS follow-up",
-      "Missed lead recovery",
-      "Enquiry pipeline",
-      "Basic reporting",
-    ],
-    cta: "Start with Follow-Up",
-  },
-  {
-    name: "Growth System",
-    price: 399,
-    summary: "Short videos plus follow-up automation — our main growth plan.",
-    features: [
-      "5 short videos per week",
-      "Social media scheduling",
-      "Email & SMS follow-up",
-      "Missed lead recovery",
-      "Basic reporting",
-    ],
-    highlight: true,
-    cta: "Choose Growth System",
-  },
+const followUpFeatures = [
+  "Automated Google review requests",
+  "Instant SMS & email replies",
+  "Missed-call text back",
+  "Lead follow-up sequences",
+  "Missed lead recovery",
+  "Enquiry pipeline",
+  "Basic reporting",
 ];
 
 const addOnFeatures = [
+  "Missed-call response",
   "AI voice call handling",
-  "Missed call response",
-  "Booking support under normal usage",
+  "Lead detail collection",
+  "Basic booking support",
+  "SMS follow-up after calls",
 ];
 
 function CheckIcon({ highlight }: { highlight?: boolean }) {
@@ -99,65 +74,11 @@ function FeatureList({
   );
 }
 
-function PlanCard({
-  plan,
-  delay,
-}: {
-  plan: MonthlyPlan;
-  delay: number;
-}) {
+function PlanLabel({ children }: { children: React.ReactNode }) {
   return (
-    <Reveal delay={delay} className="relative flex flex-col">
-      {plan.highlight && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-[1px] -z-10 rounded-[24px] bg-[conic-gradient(from_140deg,rgba(251,191,36,0.5),rgba(96,165,250,0.35),rgba(251,191,36,0.5))] blur-[2px] opacity-90"
-        />
-      )}
-      <div
-        className={`card relative flex h-full flex-col p-6 sm:p-7 ${
-          plan.highlight
-            ? "ring-1 ring-[#fbbf24]/45 shadow-[0_0_0_1px_rgba(251,191,36,0.25),0_30px_80px_-30px_rgba(251,191,36,0.35)]"
-            : ""
-        }`}
-      >
-        {plan.highlight && (
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-            <span className="rounded-full bg-[#fbbf24] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#3f1d0a] shadow-[0_0_20px_-4px_rgba(251,191,36,0.8)]">
-              Recommended
-            </span>
-          </div>
-        )}
-
-        <h3 className="text-lg font-semibold tracking-tight text-white">
-          {plan.name}
-        </h3>
-
-        <div className="mt-5 flex items-end gap-1.5">
-          <span className="text-[44px] font-semibold leading-none tracking-[-0.03em] text-white">
-            ${plan.price}
-          </span>
-          <span className="pb-2 text-sm text-white/50">/ month</span>
-        </div>
-
-        <p className="mt-2 text-sm text-white/55">{plan.summary}</p>
-
-        <div className="mt-6">
-          <FeatureList features={plan.features} highlight={plan.highlight} />
-        </div>
-
-        <div className="mt-auto pt-6">
-          <Link
-            href="/get-image"
-            className={
-              plan.highlight ? "btn-primary w-full" : "btn-secondary w-full"
-            }
-          >
-            {plan.cta}
-          </Link>
-        </div>
-      </div>
-    </Reveal>
+    <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">
+      {children}
+    </span>
   );
 }
 
@@ -169,11 +90,11 @@ export default function Pricing() {
           eyebrow="Pricing"
           title={
             <>
-              Short videos + follow-up ={" "}
-              <span className="text-brand-gradient">more bookings.</span>
+              More reviews. Faster replies.{" "}
+              <span className="text-brand-gradient">Fewer missed leads.</span>
             </>
           }
-          subtitle="Many local businesses are already losing customers because they reply too slowly, do not follow up, and are not visible enough online. SellMoreStudio helps you get seen, follow up automatically, and win back missed leads."
+          subtitle="Simple setup and one monthly plan built for massage shops, salons, restaurants, tradies, clinics and local service businesses."
         />
 
         {/* One-time setup */}
@@ -183,13 +104,11 @@ export default function Pricing() {
               aria-hidden
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_120%_at_0%_0%,rgba(59,130,246,0.12),transparent_55%)]"
             />
-            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-xl">
-                <span className="inline-flex rounded-full border border-[#60a5fa]/30 bg-[#3b82f6]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#93c5fd]">
-                  One-time fee
-                </span>
-                <h3 className="mt-3 text-xl font-semibold tracking-tight text-white sm:text-2xl">
-                  One-Time Setup
+            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-xl lg:flex-1">
+                <PlanLabel>One-time setup</PlanLabel>
+                <h3 className="mt-2 text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                  System Setup
                 </h3>
                 <div className="mt-3 flex items-end gap-1.5">
                   <span className="text-[40px] font-semibold leading-none tracking-[-0.03em] text-white sm:text-[44px]">
@@ -197,9 +116,9 @@ export default function Pricing() {
                   </span>
                   <span className="pb-2 text-sm text-white/50">once</span>
                 </div>
-                <p className="mt-2 text-sm text-white/55">
-                  Required to get your system live. Covers everything we need to
-                  launch your follow-up and content workflow.
+                <p className="mt-3 text-sm leading-relaxed text-white/55">
+                  We build, connect and test your system so it is ready to
+                  respond, follow up and recover missed opportunities.
                 </p>
               </div>
 
@@ -207,8 +126,11 @@ export default function Pricing() {
                 <FeatureList features={setupFeatures} />
               </div>
 
-              <div className="lg:shrink-0">
-                <Link href="/get-image" className="btn-secondary w-full lg:w-auto lg:min-w-[180px]">
+              <div className="lg:shrink-0 lg:pt-8">
+                <Link
+                  href="/get-started"
+                  className="btn-secondary w-full lg:w-auto lg:min-w-[180px]"
+                >
                   Get started
                 </Link>
               </div>
@@ -216,55 +138,91 @@ export default function Pricing() {
           </div>
         </Reveal>
 
-        {/* Monthly plans */}
-        <Reveal delay={0.12} className="mt-10">
-          <p className="text-center text-sm font-medium uppercase tracking-[0.14em] text-white/45">
-            Then choose your monthly plan
-          </p>
-        </Reveal>
+        {/* Follow-up plan */}
+        <Reveal delay={0.14} className="relative mt-5 flex flex-col">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-[1px] -z-10 rounded-[24px] bg-[conic-gradient(from_140deg,rgba(251,191,36,0.45),rgba(96,165,250,0.3),rgba(251,191,36,0.45))] blur-[2px] opacity-80"
+          />
+          <div className="card relative flex flex-col p-6 sm:p-8 ring-1 ring-[#fbbf24]/35 shadow-[0_0_0_1px_rgba(251,191,36,0.2),0_30px_80px_-30px_rgba(59,130,246,0.45)]">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-xl lg:flex-1">
+                <PlanLabel>Monthly plan</PlanLabel>
+                <h3 className="mt-2 text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                  Follow-Up System
+                </h3>
+                <div className="mt-3 flex items-end gap-1.5">
+                  <span className="text-[40px] font-semibold leading-none tracking-[-0.03em] text-white sm:text-[44px]">
+                    $299
+                  </span>
+                  <span className="pb-2 text-sm text-white/50">/ month</span>
+                </div>
+                <p className="mt-3 text-[15px] font-medium leading-relaxed text-[#93c5fd]">
+                  Less than $10 a day to follow up faster, recover missed leads
+                  and collect more reviews.
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-white/55">
+                  A simple system that helps local businesses reply quickly,
+                  follow up automatically and stay connected with customers.
+                </p>
+              </div>
 
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
-          {monthlyPlans.map((plan, i) => (
-            <PlanCard key={plan.name} plan={plan} delay={0.14 + i * 0.08} />
-          ))}
-        </div>
+              <div className="lg:min-w-[300px] lg:max-w-md lg:flex-1">
+                <FeatureList features={followUpFeatures} highlight />
+              </div>
 
-        {/* Optional add-on */}
-        <Reveal delay={0.3} className="mt-5">
-          <div className="card flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
-            <div>
-              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/40">
-                Optional add-on
-              </span>
-              <h3 className="mt-1 text-lg font-semibold tracking-tight text-white">
-                AI Voice Assistant
-              </h3>
-              <div className="mt-2 flex items-end gap-1.5">
-                <span className="text-2xl font-semibold tracking-[-0.02em] text-white">
-                  +$99
-                </span>
-                <span className="pb-0.5 text-sm text-white/50">/ month</span>
+              <div className="lg:shrink-0 lg:pt-8">
+                <Link href="/get-started" className="btn-primary w-full lg:w-auto lg:min-w-[200px]">
+                  Start with Follow-Up
+                </Link>
               </div>
             </div>
-
-            <div className="sm:max-w-md sm:flex-1">
-              <FeatureList features={addOnFeatures} />
-            </div>
-
-            <Link
-              href="/get-image"
-              className="btn-secondary w-full shrink-0 sm:w-auto sm:min-w-[160px]"
-            >
-              Add voice assistant
-            </Link>
           </div>
-          <p className="mt-3 text-center text-xs text-white/40">
-            High usage may require a custom plan.
-          </p>
+        </Reveal>
+
+        {/* Optional add-on */}
+        <Reveal delay={0.22} className="mt-5">
+          <div className="card flex flex-col gap-5 p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-sm lg:flex-1">
+                <PlanLabel>Optional add-on</PlanLabel>
+                <h3 className="mt-2 text-lg font-semibold tracking-tight text-white sm:text-xl">
+                  AI Voice Assistant
+                </h3>
+                <div className="mt-3 flex items-end gap-1.5">
+                  <span className="text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
+                    +$99
+                  </span>
+                  <span className="pb-0.5 text-sm text-white/50">/ month</span>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-white/55">
+                  Answer missed calls, collect enquiry details and support basic
+                  booking requests.
+                </p>
+              </div>
+
+              <div className="lg:max-w-md lg:flex-1">
+                <FeatureList features={addOnFeatures} />
+                <p className="mt-4 text-xs leading-relaxed text-white/40">
+                  Reasonable usage included. Higher call volume may require a
+                  custom plan.
+                </p>
+              </div>
+
+              <div className="lg:shrink-0 lg:pt-6">
+                <Link
+                  href="/get-started"
+                  className="btn-secondary w-full lg:w-auto lg:min-w-[160px]"
+                >
+                  Add AI Voice
+                </Link>
+              </div>
+            </div>
+          </div>
         </Reveal>
 
         <Reveal
-          delay={0.35}
+          delay={0.3}
           className="mt-10 text-center text-sm text-white/45"
         >
           Need something custom? Email{" "}

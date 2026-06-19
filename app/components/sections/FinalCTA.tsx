@@ -24,24 +24,23 @@ export default function FinalCTA() {
           <div className="relative mx-auto max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-white/70">
               <span className="h-1.5 w-1.5 rounded-full bg-[#60a5fa] shadow-[0_0_12px_2px_rgba(96,165,250,0.8)]" />
-              Ready in 24 hours
+              Built for local businesses
             </span>
 
             <h2 className="mt-5 text-4xl sm:text-5xl md:text-[3.5rem] font-semibold tracking-[-0.03em] leading-[1.05]">
-              <span className="text-gradient">Ready to turn your photos</span>
+              <span className="text-gradient">Ready to get more reviews</span>
               <br />
-              <span className="text-gradient">into </span>
-              <span className="text-brand-gradient">customers?</span>
+              <span className="text-brand-gradient">and never miss a lead?</span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-white/60">
-              Upload one photo. We&apos;ll send you a polished preview within 24
-              hours. No credit card required.
+              Set up your follow-up system and start recovering missed calls,
+              replying faster and collecting more Google reviews.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/get-image" className="btn-primary">
-                Get your first sales image
+              <Link href="/get-started" className="btn-primary">
+                Get started
                 <svg
                   viewBox="0 0 20 20"
                   className="h-4 w-4"
