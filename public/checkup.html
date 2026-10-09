@@ -51,6 +51,7 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 var KEY='AIzaSyCZ6D7nGW6_ijyOIXD-V4ZbjxSqvmJVIng';
 var ON=KEY.length>20&&KEY.indexOf('PASTE')<0;
 var L='zh',last=null;
+var SRC=((location.search.match(/[?&]src=([A-Za-z0-9_-]{1,30})/)||[])[1]||'').toLowerCase();
 var T={zh:{need:'请填写店名和手机号码（报告会在 Max 联系你时一起讲解）',consent:'请勾选同意，才能把报告发给你',checking:'正在检查…',go:'免费体检',nf:'没有在 Google 上找到这家店，请检查店名和所在区。',score:'体检分数',outOf:'满分 100',ctaT:'想把这些地方一次改好？',ctaD:'Max 会在 1 个工作日内联系你，免费帮你看看怎么改。也可以直接 WhatsApp：',again:'再查一家',err:'网络出错，请稍后再试。',phShop:'开始输入店名，然后从下拉里选择你的店',phSub:'例如 Sunnybank'},en:{need:'Please enter the business name and your mobile number',consent:'Please tick the consent box so we can send you the report',checking:'Checking…',go:'Check my profile',nf:'We could not find this business on Google. Please check the name and suburb.',score:'Profile score',outOf:'out of 100',ctaT:'Want these fixed in one go?',ctaD:'Max will contact you within 1 business day and walk you through it, free. Or WhatsApp:',again:'Check another business',err:'Something went wrong, please try again.',phShop:'Start typing, then pick your business from the list',phSub:'e.g. Sunnybank'}};
 function g(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
@@ -121,6 +122,6 @@ g('f').onsubmit=function(e){e.preventDefault();var t=T[L];g('err').textContent='
 if(!shop||ph.replace(/\D/g,'').length<8){g('err').textContent=t.need;return}if(!g('consent').checked){g('err').textContent=t.consent;return}
 g('go').disabled=true;g('go').textContent=t.checking;
 var pid=sel.id,ptok=sel.tok;
-fetch('https://sellmorestudio.app.n8n.cloud/webhook/google-checkup-run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({shop:shop,suburb:g('suburb').value.trim(),name:g('name').value.trim(),phone:ph,email:em,consent:true,hp:g('hp').value,lang:L,placeId:pid,sessionToken:pid?ptok:''})})
+fetch('https://sellmorestudio.app.n8n.cloud/webhook/google-checkup-run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({shop:shop,suburb:g('suburb').value.trim(),name:g('name').value.trim(),phone:ph,email:em,consent:true,hp:g('hp').value,lang:L,src:SRC,placeId:pid,sessionToken:pid?ptok:''})})
 .then(function(r){return r.json()}).then(function(d){render(d)}).catch(function(){g('err').textContent=t.err}).finally(function(){g('go').disabled=false;g('go').textContent=T[L].go;resetSession()})};
 </script></body></html>

@@ -211,7 +211,7 @@ export default function Hero() {
               <Link href="#how-it-works" className="btn-secondary">
                 See how it works
               </Link>
-              <a href="/checkup.html" className="btn-secondary">
+              <a href="/checkup.html?src=home" className="btn-secondary">
                 Free Google profile check
               </a>
             </motion.div>
