@@ -18,7 +18,7 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 .row{display:flex;gap:10px}.row>div{flex:1;min-width:0}
 .consent{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#555;margin-top:14px;line-height:1.5}
 .btn{width:100%;margin-top:16px;padding:14px;border:0;border-radius:12px;background:var(--b);color:#fff;font-size:17px;font-weight:700;cursor:pointer}
-.btn:disabled{opacity:.6}.hp{position:absolute;left:-9999px}
+.btn:disabled{opacity:.6}.hp{display:none}
 .rel{position:relative}
 .picked{display:none;font-size:13px;color:#1a9b5b;margin-top:6px;line-height:1.4}
 .sug{position:absolute;left:0;right:0;top:100%;z-index:20;background:#fff;border:1px solid #cdd6e6;border-radius:10px;margin-top:4px;box-shadow:0 8px 24px rgba(10,27,61,.12);overflow:hidden;display:none}
@@ -40,7 +40,7 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 <div id="subWrap"><label data-zh="所在区（例如 Sunnybank）" data-en="Suburb (e.g. Sunnybank)">所在区（例如 Sunnybank）</label><div class="rel"><input type="text" id="suburb" autocomplete="off"><div class="sug" id="subBox"></div></div></div>
 <div class="row"><div><label data-zh="你的名字" data-en="Your name">你的名字</label><input type="text" id="name"></div><div><label data-zh="手机（必填）" data-en="Mobile (required)">手机（必填）</label><input type="tel" id="phone" required autocomplete="tel"></div></div>
 <label data-zh="邮箱（选填）" data-en="Email (optional)">邮箱（选填）</label><input type="email" id="email">
-<input type="text" id="hp" class="hp" tabindex="-1" autocomplete="off">
+<input type="text" id="hp" name="hp_trap" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <div class="consent"><input type="checkbox" id="consent"><span data-zh="我同意 Sell More Studio 通过电话、短信或邮件联系我，发送体检报告和相关服务介绍，可以随时退订。" data-en="I agree that Sell More Studio may contact me by phone, SMS or email about this report and related services. I can unsubscribe at any time.">我同意 Sell More Studio 通过电话、短信或邮件联系我，发送体检报告和相关服务介绍，可以随时退订。</span></div>
 <div class="err" id="err"></div>
 <button class="btn" id="go" type="submit" data-zh="免费体检" data-en="Check my profile">免费体检</button>
