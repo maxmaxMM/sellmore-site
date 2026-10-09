@@ -20,6 +20,7 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 .btn{width:100%;margin-top:16px;padding:14px;border:0;border-radius:12px;background:var(--b);color:#fff;font-size:17px;font-weight:700;cursor:pointer}
 .btn:disabled{opacity:.6}.hp{position:absolute;left:-9999px}
 .rel{position:relative}
+.picked{display:none;font-size:13px;color:#1a9b5b;margin-top:6px;line-height:1.4}
 .sug{position:absolute;left:0;right:0;top:100%;z-index:20;background:#fff;border:1px solid #cdd6e6;border-radius:10px;margin-top:4px;box-shadow:0 8px 24px rgba(10,27,61,.12);overflow:hidden;display:none}
 .sug div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #eef1f6;line-height:1.35}
 .sug div:last-child{border:0}.sug div.on,.sug div:hover{background:#f0f5ff}
@@ -35,8 +36,8 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 <div class="hero"><h1 data-zh="Google 商家页面免费体检" data-en="Free Google Business Profile Check">Google 商家页面免费体检</h1>
 <p data-zh="输入店名，30 秒看看客人在 Google 上看到的是什么样子：评分、评价、营业时间、有没有线上预约入口，以及马上可以改进的地方。" data-en="Enter your business name and see in 30 seconds what customers find on Google: rating, reviews, opening hours, whether there is an online booking link, and what you can improve right away.">输入店名，30 秒看看客人在 Google 上看到的是什么样子：评分、评价、营业时间、有没有线上预约入口，以及马上可以改进的地方。</p></div>
 <div class="card" id="formCard"><form id="f">
-<label data-zh="店名" data-en="Business name">店名</label><div class="rel"><input type="text" id="shop" autocomplete="off"><div class="sug" id="shopBox"></div></div>
-<label data-zh="所在区（例如 Sunnybank）" data-en="Suburb (e.g. Sunnybank)">所在区（例如 Sunnybank）</label><div class="rel"><input type="text" id="suburb" autocomplete="off"><div class="sug" id="subBox"></div></div>
+<label data-zh="店名" data-en="Business name">店名</label><div class="rel"><input type="text" id="shop" autocomplete="off"><div class="sug" id="shopBox"></div></div><div class="picked" id="picked"></div>
+<div id="subWrap"><label data-zh="所在区（例如 Sunnybank）" data-en="Suburb (e.g. Sunnybank)">所在区（例如 Sunnybank）</label><div class="rel"><input type="text" id="suburb" autocomplete="off"><div class="sug" id="subBox"></div></div></div>
 <div class="row"><div><label data-zh="你的名字" data-en="Your name">你的名字</label><input type="text" id="name"></div><div><label data-zh="手机（必填）" data-en="Mobile (required)">手机（必填）</label><input type="tel" id="phone" required autocomplete="tel"></div></div>
 <label data-zh="邮箱（选填）" data-en="Email (optional)">邮箱（选填）</label><input type="email" id="email">
 <input type="text" id="hp" class="hp" tabindex="-1" autocomplete="off">
@@ -99,8 +100,9 @@ inp.addEventListener('blur',function(){setTimeout(close,250)});
 makeAC(g('shop'),g('shopBox'),'shop',function(){return tokShop},function(it){
 g('shop').value=it.main;sel.id=it.id;sel.tok=tokShop;
 var m=it.sec.match(/([^,]+?)\s+(QLD|NSW|VIC|SA|WA|TAS|NT|ACT)\b/);
-if(m)g('suburb').value=m[1].trim();
-},function(){sel.id='';sel.tok=''},null);
+g('suburb').value=m?m[1].trim():'';
+setPicked(it.sec);
+},function(){if(sel.id){g('suburb').value=''}sel.id='';sel.tok='';setPicked(null)},null);
 makeAC(g('suburb'),g('subBox'),'suburb',function(){return tokSub},function(it){
 g('suburb').value=it.main;tokSub=uuid();
 },null,function(){return !sel.id});
@@ -112,7 +114,8 @@ h+='<div class=card><div class=score><div class=ring style=background:'+c+'>'+d.
 h+='<div class=card>';d.checks.forEach(function(k){var x=k[L];h+='<div class=item><div class=dot style=background:'+col[k.status]+'>'+ic[k.status]+'</div><div><b>'+esc(x.t)+'</b><span>'+esc(x.d)+'</span></div></div>'});h+='</div>';
 h+='<div class=cta><b style=font-size:18px>'+t.ctaT+'</b><p>'+t.ctaD+' <a href=https://wa.me/61421435858>+61 421 435 858</a></p><button class=btn onclick=again()>'+t.again+'</button></div>';
 g('result').innerHTML=h;g('formCard').style.display='none';window.scrollTo(0,0)}
-function resetSession(){sel={id:'',tok:''};tokShop=uuid();tokSub=uuid()}
+function setPicked(a){var on=a!==null;g('picked').textContent=on?'✓ '+a:'';g('picked').style.display=on&&a?'block':'none';g('subWrap').style.display=on?'none':''}
+function resetSession(){sel={id:'',tok:''};tokShop=uuid();tokSub=uuid();setPicked(null)}
 function again(){g('result').innerHTML='';g('formCard').style.display='block';last=null;resetSession()}
 g('f').onsubmit=function(e){e.preventDefault();var t=T[L];g('err').textContent='';var shop=g('shop').value.trim(),ph=g('phone').value.trim(),em=g('email').value.trim();
 if(!shop||ph.replace(/\D/g,'').length<8){g('err').textContent=t.need;return}if(!g('consent').checked){g('err').textContent=t.consent;return}
