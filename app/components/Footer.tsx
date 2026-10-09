@@ -20,6 +20,9 @@ export default function Footer() {
           <Link href="/get-image" className="hover:text-white">
             Get started
           </Link>
+          <a href="/checkup.html" className="hover:text-white">
+            Free Google check
+          </a>
         </div>
 
         <div className="text-xs text-white/40">
