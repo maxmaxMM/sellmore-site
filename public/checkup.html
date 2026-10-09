@@ -37,8 +37,8 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 <div class="card" id="formCard"><form id="f">
 <label data-zh="店名" data-en="Business name">店名</label><div class="rel"><input type="text" id="shop" autocomplete="off"><div class="sug" id="shopBox"></div></div>
 <label data-zh="所在区（例如 Sunnybank）" data-en="Suburb (e.g. Sunnybank)">所在区（例如 Sunnybank）</label><div class="rel"><input type="text" id="suburb" autocomplete="off"><div class="sug" id="subBox"></div></div>
-<div class="row"><div><label data-zh="你的名字" data-en="Your name">你的名字</label><input type="text" id="name"></div><div><label data-zh="手机" data-en="Mobile">手机</label><input type="tel" id="phone"></div></div>
-<label data-zh="邮箱" data-en="Email">邮箱</label><input type="email" id="email">
+<div class="row"><div><label data-zh="你的名字" data-en="Your name">你的名字</label><input type="text" id="name"></div><div><label data-zh="手机（必填）" data-en="Mobile (required)">手机（必填）</label><input type="tel" id="phone" required autocomplete="tel"></div></div>
+<label data-zh="邮箱（选填）" data-en="Email (optional)">邮箱（选填）</label><input type="email" id="email">
 <input type="text" id="hp" class="hp" tabindex="-1" autocomplete="off">
 <div class="consent"><input type="checkbox" id="consent"><span data-zh="我同意 Sell More Studio 通过电话、短信或邮件联系我，发送体检报告和相关服务介绍，可以随时退订。" data-en="I agree that Sell More Studio may contact me by phone, SMS or email about this report and related services. I can unsubscribe at any time.">我同意 Sell More Studio 通过电话、短信或邮件联系我，发送体检报告和相关服务介绍，可以随时退订。</span></div>
 <div class="err" id="err"></div>
@@ -47,10 +47,10 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 <div id="result"></div>
 <p class="muted">Sell More Studio · Brisbane · WhatsApp +61 421 435 858</p>
 </div><script>
-var KEY='PASTE_BROWSER_KEY_HERE';
+var KEY='AIzaSyCZ6D7nGW6_ijyOIXD-V4ZbjxSqvmJVIng';
 var ON=KEY.length>20&&KEY.indexOf('PASTE')<0;
 var L='zh',last=null;
-var T={zh:{need:'请填写店名，并留下手机或邮箱',consent:'请勾选同意，才能把报告发给你',checking:'正在检查…',go:'免费体检',nf:'没有在 Google 上找到这家店，请检查店名和所在区。',score:'体检分数',outOf:'满分 100',ctaT:'想把这些地方一次改好？',ctaD:'Max 会在 1 个工作日内联系你，免费帮你看看怎么改。也可以直接 WhatsApp：',again:'再查一家',err:'网络出错，请稍后再试。',phShop:'开始输入店名，然后从下拉里选择你的店',phSub:'例如 Sunnybank'},en:{need:'Please enter the business name and a mobile or email',consent:'Please tick the consent box so we can send you the report',checking:'Checking…',go:'Check my profile',nf:'We could not find this business on Google. Please check the name and suburb.',score:'Profile score',outOf:'out of 100',ctaT:'Want these fixed in one go?',ctaD:'Max will contact you within 1 business day and walk you through it, free. Or WhatsApp:',again:'Check another business',err:'Something went wrong, please try again.',phShop:'Start typing, then pick your business from the list',phSub:'e.g. Sunnybank'}};
+var T={zh:{need:'请填写店名和手机号码（报告会在 Max 联系你时一起讲解）',consent:'请勾选同意，才能把报告发给你',checking:'正在检查…',go:'免费体检',nf:'没有在 Google 上找到这家店，请检查店名和所在区。',score:'体检分数',outOf:'满分 100',ctaT:'想把这些地方一次改好？',ctaD:'Max 会在 1 个工作日内联系你，免费帮你看看怎么改。也可以直接 WhatsApp：',again:'再查一家',err:'网络出错，请稍后再试。',phShop:'开始输入店名，然后从下拉里选择你的店',phSub:'例如 Sunnybank'},en:{need:'Please enter the business name and your mobile number',consent:'Please tick the consent box so we can send you the report',checking:'Checking…',go:'Check my profile',nf:'We could not find this business on Google. Please check the name and suburb.',score:'Profile score',outOf:'out of 100',ctaT:'Want these fixed in one go?',ctaD:'Max will contact you within 1 business day and walk you through it, free. Or WhatsApp:',again:'Check another business',err:'Something went wrong, please try again.',phShop:'Start typing, then pick your business from the list',phSub:'e.g. Sunnybank'}};
 function g(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function uuid(){var c=window.crypto;if(c&&c.randomUUID)return c.randomUUID();return 't'+Date.now().toString(16)+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)}
@@ -115,7 +115,7 @@ g('result').innerHTML=h;g('formCard').style.display='none';window.scrollTo(0,0)}
 function resetSession(){sel={id:'',tok:''};tokShop=uuid();tokSub=uuid()}
 function again(){g('result').innerHTML='';g('formCard').style.display='block';last=null;resetSession()}
 g('f').onsubmit=function(e){e.preventDefault();var t=T[L];g('err').textContent='';var shop=g('shop').value.trim(),ph=g('phone').value.trim(),em=g('email').value.trim();
-if(!shop||(!ph&&!em)){g('err').textContent=t.need;return}if(!g('consent').checked){g('err').textContent=t.consent;return}
+if(!shop||ph.replace(/\D/g,'').length<8){g('err').textContent=t.need;return}if(!g('consent').checked){g('err').textContent=t.consent;return}
 g('go').disabled=true;g('go').textContent=t.checking;
 var pid=sel.id,ptok=sel.tok;
 fetch('https://sellmorestudio.app.n8n.cloud/webhook/google-checkup-run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({shop:shop,suburb:g('suburb').value.trim(),name:g('name').value.trim(),phone:ph,email:em,consent:true,hp:g('hp').value,lang:L,placeId:pid,sessionToken:pid?ptok:''})})
