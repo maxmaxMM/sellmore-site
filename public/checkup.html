@@ -123,7 +123,7 @@ h+='<div class=cta><b style=font-size:18px>'+t.ctaT+'</b><p>'+t.ctaD+' <a href=h
 g('result').innerHTML=h;g('formCard').style.display='none';window.scrollTo(0,0);loadGrid(d)}
 function setPicked(a){var on=a!==null;g('picked').textContent=on?'✓ '+a:'';g('picked').style.display=on&&a?'block':'none';g('subWrap').style.display=on?'none':''}
 // 周边排名方格：独立的请求，失败或关闭时不影响上面的分数报告。GRID_ON=false 可以整个关掉
-var GRID_ON=true,grid=null,gridKey='';
+var GRID_ON=false,grid=null,gridKey='';
 function paintGrid(){var b=g('gridBox');if(!b)return;var t=T[L];
 if(grid==='loading'){b.innerHTML='<div class=card><b>'+t.gT+'</b><br><span style=color:#666;font-size:14px>'+t.gL+'</span></div>';return}
 if(!grid||!grid.found){b.innerHTML='';return}
