@@ -30,6 +30,9 @@ input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px;borde
 .item{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eef1f6}.item:last-child{border:0}
 .dot{flex:0 0 24px;height:24px;border-radius:50%;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
 .item b{display:block;margin-bottom:2px}.item span{color:#555;font-size:14px;line-height:1.55}
+.rg{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:10px}.rg div{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.rg .g1{background:#e3f5ea;color:#12703f}.rg .g2{background:#fdf0d9;color:#8a5600}.rg .g3{background:#fbe6e6;color:#a32d2d}.rg .g0{background:#eef1f6;color:#888}.rg .me{outline:2px solid #1a9b5b}
+.rleg{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:#666;margin-top:10px}.rleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px}
 .muted{color:#888;font-size:12px;margin-top:22px;text-align:center}.err{color:#d64545;font-size:14px;margin-top:10px}
 </style></head><body><div class="wrap">
 <div class="top"><img src="https://assets.cdn.filesafe.space/QuxyIk8Dlwm0swsnLDmX/media/6a5d7f3a1097b8119506639c.png" alt="Sell More Studio"><div class="lang"><button type="button" id="bzh" class="on">中文</button><button type="button" id="ben">EN</button></div></div>
@@ -52,7 +55,7 @@ var KEY='AIzaSyCZ6D7nGW6_ijyOIXD-V4ZbjxSqvmJVIng';
 var ON=KEY.length>20&&KEY.indexOf('PASTE')<0;
 var L='zh',last=null;
 var SRC=((location.search.match(/[?&]src=([A-Za-z0-9_-]{1,30})/)||[])[1]||'').toLowerCase();
-var T={zh:{need:'请填写店名和手机号码（报告会在 Max 联系你时一起讲解）',consent:'请勾选同意，才能把报告发给你',checking:'正在检查…',go:'免费体检',nf:'没有在 Google 上找到这家店，请检查店名和所在区。',score:'体检分数',outOf:'满分 100',ctaT:'想把这些地方一次改好？',ctaD:'Max 会在 1 个工作日内联系你，免费帮你看看怎么改。也可以直接 WhatsApp：',again:'再查一家',err:'网络出错，请稍后再试。',phShop:'开始输入店名，然后从下拉里选择你的店',phSub:'例如 Sunnybank'},en:{need:'Please enter the business name and your mobile number',consent:'Please tick the consent box so we can send you the report',checking:'Checking…',go:'Check my profile',nf:'We could not find this business on Google. Please check the name and suburb.',score:'Profile score',outOf:'out of 100',ctaT:'Want these fixed in one go?',ctaD:'Max will contact you within 1 business day and walk you through it, free. Or WhatsApp:',again:'Check another business',err:'Something went wrong, please try again.',phShop:'Start typing, then pick your business from the list',phSub:'e.g. Sunnybank'}};
+var T={zh:{need:'请填写店名和手机号码（报告会在 Max 联系你时一起讲解）',consent:'请勾选同意，才能把报告发给你',checking:'正在检查…',go:'免费体检',nf:'没有在 Google 上找到这家店，请检查店名和所在区。',score:'体检分数',outOf:'满分 100',ctaT:'想把这些地方一次改好？',ctaD:'Max 会在 1 个工作日内联系你，免费帮你看看怎么改。也可以直接 WhatsApp：',again:'再查一家',err:'网络出错，请稍后再试。',phShop:'开始输入店名，然后从下拉里选择你的店',phSub:'例如 Sunnybank',gT:'你在周边的搜索排名',gS:'客人在这些位置搜「{k}」时，你大致排第几',gL:'正在查看周边排名…',g1:'前 3',g2:'4–10',g3:'10 名以外',gK:'每格约 1 公里，中间是你的店',sA:'周边 25 个位置里，有 {n} 个你排进前三，排名很稳。接下来的重点是把来看的人变成预约。',sB:'25 个位置里，有 {n} 个你排进前三。离店稍远的地方还有提升空间。',sC:'25 个位置里，只有 {n} 个你排进前三。离店越远，客人越难搜到你。',sD:'25 个位置里，你都没有排进前三，客人要往下滑才看得到你。',sE:'在周边 25 个位置搜「{k}」，前 20 名里都没有看到你的店。',gN:'排名为大致结果，实际会因搜索的人和时间略有不同。'},en:{need:'Please enter the business name and your mobile number',consent:'Please tick the consent box so we can send you the report',checking:'Checking…',go:'Check my profile',nf:'We could not find this business on Google. Please check the name and suburb.',score:'Profile score',outOf:'out of 100',ctaT:'Want these fixed in one go?',ctaD:'Max will contact you within 1 business day and walk you through it, free. Or WhatsApp:',again:'Check another business',err:'Something went wrong, please try again.',phShop:'Start typing, then pick your business from the list',phSub:'e.g. Sunnybank',gT:'Your search ranking nearby',gS:'Roughly where you rank when someone searches "{k}" from each spot',gL:'Checking your ranking nearby…',g1:'Top 3',g2:'4–10',g3:'Below 10',gK:'Each square is about 1 km. You are in the middle.',sA:'You rank in the top 3 in {n} of 25 nearby spots, which is strong. The next step is turning those views into bookings.',sB:'You rank in the top 3 in {n} of 25 nearby spots. There is room to grow a little further from your door.',sC:'You rank in the top 3 in only {n} of 25 nearby spots. The further from your door, the harder you are to find.',sD:'You are not in the top 3 in any of 25 nearby spots, so customers have to scroll to find you.',sE:'Searching "{k}" from 25 nearby spots, we did not see your business in the top 20.',gN:'Rankings are approximate and vary by who is searching and when.'}};
 function g(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function uuid(){var c=window.crypto;if(c&&c.randomUUID)return c.randomUUID();return 't'+Date.now().toString(16)+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)}
@@ -112,12 +115,24 @@ function render(d){last=d;var t=T[L],h='';
 if(!d.found){h='<div class=card><b>'+t.nf+'</b><button class=btn onclick=again()>'+t.again+'</button></div>';g('result').innerHTML=h;g('formCard').style.display='none';return}
 var c=d.score>=80?col.ok:d.score>=55?col.warn:col.bad;
 h+='<div class=card><div class=score><div class=ring style=background:'+c+'>'+d.score+'</div><div><b style=font-size:18px>'+esc(d.name)+'</b><br><span style=color:#555>'+esc(d.address)+'</span><br><span style=color:#555>'+t.score+' · '+t.outOf+'</span></div></div></div>';
+h+='<div id=gridBox></div>';
 h+='<div class=card>';d.checks.forEach(function(k){var x=k[L];h+='<div class=item><div class=dot style=background:'+col[k.status]+'>'+ic[k.status]+'</div><div><b>'+esc(x.t)+'</b><span>'+esc(x.d)+'</span></div></div>'});h+='</div>';
 h+='<div class=cta><b style=font-size:18px>'+t.ctaT+'</b><p>'+t.ctaD+' <a href=https://wa.me/61421435858>+61 421 435 858</a></p><button class=btn onclick=again()>'+t.again+'</button></div>';
-g('result').innerHTML=h;g('formCard').style.display='none';window.scrollTo(0,0)}
+g('result').innerHTML=h;g('formCard').style.display='none';window.scrollTo(0,0);loadGrid(d)}
 function setPicked(a){var on=a!==null;g('picked').textContent=on?'✓ '+a:'';g('picked').style.display=on&&a?'block':'none';g('subWrap').style.display=on?'none':''}
+// 周边排名方格：独立的请求，失败或关闭时不影响上面的分数报告。GRID_ON=false 可以整个关掉
+var GRID_ON=true,grid=null,gridKey='';
+function paintGrid(){var b=g('gridBox');if(!b)return;var t=T[L];
+if(grid==='loading'){b.innerHTML='<div class=card><b>'+t.gT+'</b><br><span style=color:#666;font-size:14px>'+t.gL+'</span></div>';return}
+if(!grid||!grid.found){b.innerHTML='';return}
+var k=esc(grid.keyword),n=grid.top3,s=n>=20?t.sA:n>=8?t.sB:n>=1?t.sC:grid.top10>0?t.sD:t.sE,c='';
+for(var i=0;i<grid.ranks.length;i++){var r=grid.ranks[i];c+='<div class="'+(r<0?'g0':r>=1&&r<=3?'g1':r>=4&&r<=10?'g2':'g3')+(i===12?' me':'')+'">'+(r<0?'–':r===0?'20+':r)+'</div>'}
+b.innerHTML='<div class=card><b style=font-size:17px>'+t.gT+'</b><br><span style=color:#666;font-size:13.5px>'+t.gS.replace('{k}',k)+'</span><div class=rg>'+c+'</div><div class=rleg><span><i style=background:#e3f5ea></i>'+t.g1+'</span><span><i style=background:#fdf0d9></i>'+t.g2+'</span><span><i style=background:#fbe6e6></i>'+t.g3+'</span><span>'+t.gK+'</span></div><p style="margin:12px 0 0;line-height:1.6">'+s.replace('{n}',n).replace('{k}',k)+'</p><p style="margin:8px 0 0;font-size:12px;color:#999">'+t.gN+'</p></div>'}
+function loadGrid(d){if(!GRID_ON||!d||!d.found||!d.address){return}var key=d.name+'|'+d.address;if(key===gridKey){paintGrid();return}gridKey=key;grid='loading';paintGrid();
+fetch('https://sellmorestudio.app.n8n.cloud/webhook/google-checkup-grid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:d.name,address:d.address,hp:g('hp').value})})
+.then(function(r){return r.json()}).then(function(x){if(gridKey===key){grid=x;paintGrid()}}).catch(function(){if(gridKey===key){grid=null;paintGrid()}})}
 function resetSession(){sel={id:'',tok:''};tokShop=uuid();tokSub=uuid();setPicked(null)}
-function again(){g('result').innerHTML='';g('formCard').style.display='block';last=null;resetSession()}
+function again(){g('result').innerHTML='';g('formCard').style.display='block';last=null;grid=null;gridKey='';resetSession()}
 g('f').onsubmit=function(e){e.preventDefault();var t=T[L];g('err').textContent='';var shop=g('shop').value.trim(),ph=g('phone').value.trim(),em=g('email').value.trim();
 if(!shop||ph.replace(/\D/g,'').length<8){g('err').textContent=t.need;return}if(!g('consent').checked){g('err').textContent=t.consent;return}
 g('go').disabled=true;g('go').textContent=t.checking;
