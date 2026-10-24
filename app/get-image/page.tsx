@@ -5,26 +5,15 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import Container from "../components/Container";
 import Reveal from "../components/Reveal";
+import {
+  FORM_FIELDS,
+  FORM_IFRAME_NAME,
+  GOOGLE_FORM_ACTION,
+} from "../lib/google-form";
 import { businessTypes } from "../lib/site";
 
 const WHATSAPP_URL =
   "https://wa.me/61421435858?text=Hi%20Sell%20More%20Studio%20%E2%80%94%20I%27d%20like%20my%20first%20marketing%20image.";
-
-// Google Forms integration — uses the edit-form document id (/d/<FORM_ID>/formResponse).
-const GOOGLE_FORM_ACTION =
-  "https://docs.google.com/forms/d/1FB8Q_qomwPU0fwnvh7bGB5Td9OMTOvDhqLRgCAFj9Tc/formResponse";
-
-const FORM_FIELDS = {
-  businessName: "entry.1266170559",
-  businessType: "entry.1577590194",
-  offer: "entry.53801449",
-  // TODO: replace with the real entry id for the "Image link" question on the Google Form.
-  imageLink: "entry.1100204033",
-  phone: "entry.1187638745",
-  email: "entry.40614474",
-} as const;
-
-const FORM_IFRAME_NAME = "sellmore-form-sink";
 
 export default function GetImagePage() {
   const reduce = useReducedMotion();
