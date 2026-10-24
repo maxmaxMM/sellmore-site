@@ -2,22 +2,13 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState, type FormEvent } from "react";
+import { useRef, useState } from "react";
 import Container from "../components/Container";
 import Reveal from "../components/Reveal";
-
-const businessTypes = [
-  "Food & Drink",
-  "Beauty",
-  "Real Estate",
-  "Services",
-  "Fitness",
-  "Retail",
-  "Other",
-];
+import { businessTypes } from "../lib/site";
 
 const WHATSAPP_URL =
-  "https://wa.me/61421435858?text=Hi%20SellMore%20Studio%20%E2%80%94%20I%27d%20like%20my%20first%20marketing%20image.";
+  "https://wa.me/61421435858?text=Hi%20Sell%20More%20Studio%20%E2%80%94%20I%27d%20like%20my%20first%20marketing%20image.";
 
 // Google Forms integration — uses the edit-form document id (/d/<FORM_ID>/formResponse).
 const GOOGLE_FORM_ACTION =
@@ -44,7 +35,7 @@ export default function GetImagePage() {
 
   // Native form submit to Google Forms — no preventDefault, no fetch.
   // The form targets a hidden iframe so the user stays on this page.
-  const onSubmit = (_e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = () => {
     posted.current = true;
     setSubmitting(true);
     // Safety net in case the iframe load event is blocked by cross-origin headers.
@@ -96,8 +87,10 @@ export default function GetImagePage() {
                       Get your first sales image
                     </h1>
                     <p className="mx-auto mt-3 max-w-md text-[15px] text-white/60">
-                      Upload your photo. We&apos;ll turn it into a
-                      high-converting marketing image.
+                      For massage clinics, nail salons, beauty salons,
+                      barbershops and other local businesses. Share a public
+                      image link and we&apos;ll turn it into a sample marketing
+                      image.
                     </p>
                   </div>
                 </Reveal>
@@ -114,7 +107,7 @@ export default function GetImagePage() {
                     <Field
                       label="Business name"
                       name={FORM_FIELDS.businessName}
-                      placeholder="e.g. Nonna's Kitchen"
+                      placeholder="e.g. a nail salon in Brisbane"
                       required
                     />
 
@@ -154,7 +147,7 @@ export default function GetImagePage() {
                     <Field
                       label="Promotion / offer"
                       name={FORM_FIELDS.offer}
-                      placeholder="e.g. $9.90 lunch combo — this week only"
+                      placeholder="e.g. gel manicure this week"
                       required
                     />
 

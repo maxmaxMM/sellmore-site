@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
+import type { ComponentType } from "react";
 import Container from "../Container";
 import {
-  LunchComboCard,
-  OpenHomeCard,
-  FacialCard,
-  GymCard,
-  TaxCard,
+  BarberBookingCard,
+  FacialBookingCard,
+  MassageBookingCard,
+  NailSpecialCard,
+  ReviewGrowthCard,
 } from "../marketing-cards/Cards";
+import { DEMO_DISPLAY, DEMO_TEL, FREE_SAMPLE_URL, GOOGLE_CHECK_HREF } from "../../lib/site";
 
 type CardSlot = {
   style: string;
@@ -18,113 +20,54 @@ type CardSlot = {
   dur: number;
   delay: number;
   zIndex: number;
-  Card: React.ComponentType;
+  Card: ComponentType;
 };
 
 const slots: CardSlot[] = [
   {
-    // Lunch combo — top-left portrait
     style: "top-[0%] left-[0%] w-[42%]",
     rotate: -4,
     dy: 10,
     dur: 7,
     delay: 0,
     zIndex: 4,
-    Card: LunchComboCard,
+    Card: MassageBookingCard,
   },
   {
-    // Open home — top-right landscape
     style: "top-[3%] right-[-2%] w-[54%]",
     rotate: 4,
     dy: 14,
     dur: 8.5,
     delay: 0.2,
     zIndex: 3,
-    Card: OpenHomeCard,
+    Card: NailSpecialCard,
   },
   {
-    // Facial — mid-left landscape (wider), overlaps Lunch
     style: "top-[46%] left-[-2%] w-[52%]",
     rotate: -3,
     dy: 12,
     dur: 9,
     delay: 0.4,
     zIndex: 5,
-    Card: FacialCard,
+    Card: FacialBookingCard,
   },
   {
-    // Gym — mid-center portrait
     style: "top-[52%] left-[40%] w-[30%]",
     rotate: 3,
     dy: 9,
     dur: 7.5,
     delay: 0.6,
     zIndex: 7,
-    Card: GymCard,
+    Card: BarberBookingCard,
   },
   {
-    // Tax — mid-right portrait
     style: "top-[44%] right-[-3%] w-[34%]",
     rotate: -3,
     dy: 11,
     dur: 8,
     delay: 0.8,
     zIndex: 6,
-    Card: TaxCard,
-  },
-];
-
-const featureIcons = [
-  {
-    title: "Google reviews",
-    meta: "Ask automatically",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Instant replies",
-    meta: "SMS & email",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Missed leads",
-    meta: "Recovered fast",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-      </svg>
-    ),
+    Card: ReviewGrowthCard,
   },
 ];
 
@@ -139,21 +82,19 @@ export default function Hero() {
           transition: {
             repeat: Infinity,
             duration: dur,
-            ease: "easeInOut",
+            ease: "easeInOut" as const,
             delay,
-          } as const,
+          },
         };
 
   return (
-    <section className="relative overflow-hidden pt-8 pb-10 md:pt-10 md:pb-14">
-      {/* grid + blue glow backdrop */}
+    <section className="relative overflow-hidden pt-6 pb-8 md:pt-10 md:pb-14">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-60" />
       <div className="pointer-events-none absolute right-[-10%] top-[-5%] h-[720px] w-[720px] rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.35),transparent_70%)] blur-2xl" />
-      <div className="pointer-events-none absolute right-[0%] top-[15%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(closest-side,rgba(34,211,238,0.18),transparent_70%)] blur-3xl" />
+      <div className="pointer-events-none absolute right-[0%] top-[15%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(closest-side,rgba(251,191,36,0.12),transparent_70%)] blur-3xl" />
 
       <Container className="relative">
-        <div className="grid items-center gap-10 md:gap-12 lg:grid-cols-[1fr_1.15fr]">
-          {/* -------------------------- LEFT -------------------------- */}
+        <div className="grid items-center gap-8 md:gap-12 lg:grid-cols-[1fr_1.15fr]">
           <div className="relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -161,39 +102,46 @@ export default function Hero() {
               transition={{ duration: 0.6 }}
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#60a5fa] shadow-[0_0_10px_2px_rgba(96,165,250,0.8)]" />
-              Built for Local Businesses
+              <span className="h-1.5 w-1.5 rounded-full bg-[#fbbf24] shadow-[0_0_10px_2px_rgba(251,191,36,0.7)]" />
+              Brisbane &amp; Australian local businesses
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.05 }}
-              className="mt-5 text-[2.75rem] leading-[1.02] sm:text-[3.5rem] lg:text-[4rem] font-bold tracking-[-0.03em]"
+              className="mt-5 text-[2.45rem] leading-[1.02] font-bold tracking-[-0.03em] sm:text-[3.35rem] lg:text-[3.7rem]"
             >
-              <span className="text-white">Get more reviews.</span>
+              <span className="text-white">More bookings.</span>
               <br />
-              <span className="text-brand-gradient">Never miss a lead.</span>
+              <span className="text-brand-gradient">Fewer missed calls.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="mt-5 max-w-lg text-[15px] leading-relaxed text-white/65"
+              className="mt-5 max-w-xl text-[15.5px] leading-relaxed text-white/70 sm:text-base"
             >
-              Automated Google review requests, instant replies, missed-call
-              recovery and follow-up systems for local businesses.
+              Sell More Studio helps massage clinics, nail salons, beauty
+              salons, barbershops and other local services get more bookings,
+              answer the phone, follow up with customers, collect Google
+              reviews, and stay visible on social media.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25 }}
-              className="mt-7 flex flex-wrap gap-3"
+              className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
             >
-              <Link href="/get-started" className="btn-primary">
-                Get started
+              <a
+                href={FREE_SAMPLE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                Get free sample / demo
                 <svg
                   viewBox="0 0 20 20"
                   className="h-4 w-4"
@@ -207,57 +155,59 @@ export default function Hero() {
                   <path d="M4 10h12" />
                   <path d="M12 5l5 5-5 5" />
                 </svg>
+              </a>
+              <Link href="/get-started" className="btn-secondary">
+                Get started
               </Link>
-              <Link href="#how-it-works" className="btn-secondary">
-                See how it works
-              </Link>
-              <a href="/checkup.html?src=home" className="btn-secondary">
+              <a href={GOOGLE_CHECK_HREF} className="btn-secondary">
                 Free Google profile check
               </a>
             </motion.div>
 
-            {/* Feature icon row */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="mt-8 grid grid-cols-3 gap-4 border-t border-white/5 pt-6 max-w-lg"
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="mt-3"
             >
-              {featureIcons.map((f) => (
-                <div key={f.title} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#3b82f6]/15 text-[#93c5fd] ring-1 ring-inset ring-[#60a5fa]/25">
-                    <span className="h-4 w-4">{f.icon}</span>
-                  </span>
-                  <div className="leading-tight">
-                    <div className="text-[12.5px] font-semibold text-white">
-                      {f.title}
-                    </div>
-                    <div className="text-[11px] text-white/55">{f.meta}</div>
-                  </div>
-                </div>
-              ))}
+              <a
+                href={DEMO_TEL}
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[14px] border border-[#fbbf24]/45 bg-[#fbbf24]/10 px-4 py-3 text-left text-[14px] font-semibold text-[#fde68a] transition-colors hover:bg-[#fbbf24]/16 sm:w-auto sm:justify-start"
+              >
+                <span className="h-2 w-2 shrink-0 rounded-full bg-[#fbbf24] shadow-[0_0_10px_2px_rgba(251,191,36,0.7)]" />
+                Test Live AI Receptionist: {DEMO_DISPLAY}
+              </a>
+              <Link
+                href="#how-it-works"
+                className="mt-3 inline-flex min-h-11 items-center text-sm font-medium text-white/60 underline-offset-4 hover:text-white hover:underline"
+              >
+                See how the services fit together
+              </Link>
             </motion.div>
           </div>
 
-          {/* -------------------------- RIGHT — cards -------------------------- */}
-          <div className="relative h-[520px] sm:h-[560px] md:h-[600px] lg:h-[620px]">
-            {/* Strong blue glow behind cards */}
-            <div className="pointer-events-none absolute inset-0 -z-10">
-              <div className="absolute left-1/2 top-1/2 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.55),transparent_70%)] blur-2xl" />
-              <div className="absolute left-[20%] top-[10%] h-[280px] w-[280px] rounded-full bg-[radial-gradient(closest-side,rgba(96,165,250,0.45),transparent_70%)] blur-2xl" />
-              <div className="absolute right-[10%] bottom-[10%] h-[300px] w-[300px] rounded-full bg-[radial-gradient(closest-side,rgba(34,211,238,0.35),transparent_70%)] blur-2xl" />
-            </div>
+          <div>
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">
+              Sample previews — not client campaigns
+            </p>
+            <div className="relative h-[460px] sm:h-[540px] md:h-[600px] lg:h-[620px]">
+              <div className="pointer-events-none absolute inset-0 -z-10">
+                <div className="absolute left-1/2 top-1/2 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.55),transparent_70%)] blur-2xl" />
+                <div className="absolute left-[20%] top-[10%] h-[280px] w-[280px] rounded-full bg-[radial-gradient(closest-side,rgba(251,191,36,0.28),transparent_70%)] blur-2xl" />
+                <div className="absolute right-[10%] bottom-[10%] h-[300px] w-[300px] rounded-full bg-[radial-gradient(closest-side,rgba(34,211,238,0.35),transparent_70%)] blur-2xl" />
+              </div>
 
-            {slots.map((s, i) => (
-              <motion.div
-                key={i}
-                style={{ zIndex: s.zIndex, rotate: `${s.rotate}deg` }}
-                className={`absolute ${s.style}`}
-                {...float(s.dy, s.dur, s.delay)}
-              >
-                <s.Card />
-              </motion.div>
-            ))}
+              {slots.map((s, i) => (
+                <motion.div
+                  key={i}
+                  style={{ zIndex: s.zIndex, rotate: `${s.rotate}deg` }}
+                  className={`absolute ${s.style}`}
+                  {...float(s.dy, s.dur, s.delay)}
+                >
+                  <s.Card />
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </Container>

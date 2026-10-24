@@ -12,16 +12,7 @@ import {
 } from "react";
 import Container from "../components/Container";
 import Reveal from "../components/Reveal";
-
-const businessTypes = [
-  "Food & Drink",
-  "Beauty",
-  "Real Estate",
-  "Services",
-  "Fitness",
-  "Retail",
-  "Other",
-];
+import { businessTypes } from "../lib/site";
 
 export default function GetStartedPage() {
   const reduce = useReducedMotion();
@@ -100,8 +91,9 @@ export default function GetStartedPage() {
                       Tell us about your business
                     </h1>
                     <p className="mx-auto mt-3 max-w-md text-white/60">
-                      We&apos;ll help you set up review requests, instant replies
-                      and follow-up automation for your business.
+                      Massage clinics, nail salons, beauty salons, barbershops
+                      and other local services — share a few details and a
+                      photo, and Sell More Studio will prepare your sample.
                     </p>
                   </div>
                 </Reveal>
@@ -115,7 +107,7 @@ export default function GetStartedPage() {
                     <Field
                       label="Business name"
                       name="business_name"
-                      placeholder="e.g. Nonna's Kitchen"
+                      placeholder="e.g. a massage clinic in Brisbane"
                       required
                     />
 
@@ -155,7 +147,7 @@ export default function GetStartedPage() {
                     <Field
                       label="Promotion / offer"
                       name="offer"
-                      placeholder="e.g. $18 truffle pasta — today only"
+                      placeholder="e.g. 60-minute remedial massage"
                       required
                     />
 
@@ -244,7 +236,7 @@ export default function GetStartedPage() {
                         label="Phone / WhatsApp"
                         name="phone"
                         type="tel"
-                        placeholder="+1 555 000 0000"
+                        placeholder="04xx xxx xxx"
                         required
                       />
                       <Field
