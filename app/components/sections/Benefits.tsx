@@ -1,79 +1,58 @@
 import Container from "../Container";
 import Reveal from "../Reveal";
 
-const benefits = [
+const pillars = [
   {
-    title: "Get More Reviews",
+    title: "More Bookings",
     description:
-      "Automatically ask happy customers for Google reviews after their visit.",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" />
-      </svg>
-    ),
+      "A booking page clients can use from Google, your website or a social profile — including after you have locked the door.",
   },
   {
-    title: "Reply Instantly",
+    title: "Fewer Missed Calls",
     description:
-      "Send an immediate SMS or email reply when a new enquiry comes in.",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
-      </svg>
-    ),
+      "When you are with a client, the call or the text still gets an answer and a way to book.",
   },
   {
-    title: "Recover Missed Leads",
+    title: "Smarter Customer Follow-Ups",
     description:
-      "Follow up with missed calls and unanswered enquiries before they choose a competitor.",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-      </svg>
-    ),
+      "Reminders, a thank-you after the visit, and a note to clients who have gone quiet.",
+  },
+  {
+    title: "Better Google Reviews",
+    description:
+      "A polite ask at the right time, plus a QR code on the desk, so happy clients can actually leave a review.",
+  },
+  {
+    title: "AI-Powered Business Reception",
+    description:
+      "A receptionist that picks up 24/7, and a chat on your website for the questions you answer every day.",
+  },
+  {
+    title: "Social Media Content & Management",
+    description:
+      "Short videos and posts, written and scheduled, so the shop looks open even on a fully booked Tuesday.",
   },
 ];
 
 export default function Benefits() {
   return (
-    <section id="how-it-works" className="relative py-16 md:py-20">
+    <section className="relative py-12 md:py-16" aria-labelledby="pillars-heading">
       <Container>
-        <div className="grid gap-5 md:grid-cols-3">
-          {benefits.map((b, i) => (
-            <Reveal key={b.title} delay={i * 0.08}>
-              <div className="card h-full p-6 sm:p-7">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#3b82f6]/15 text-[#93c5fd] ring-1 ring-inset ring-[#60a5fa]/25">
-                  <span className="h-5 w-5">{b.icon}</span>
-                </span>
-                <h3 className="mt-5 text-lg font-semibold tracking-tight text-white">
-                  {b.title}
+        <h2 id="pillars-heading" className="sr-only">
+          What Sell More Studio helps local businesses with
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {pillars.map((pillar, i) => (
+            <Reveal key={pillar.title} delay={i * 0.05}>
+              <div className="card h-full p-5 sm:p-6">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#fbbf24]">
+                  0{i + 1}
+                </div>
+                <h3 className="mt-2 text-lg font-semibold tracking-tight text-white">
+                  {pillar.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">
-                  {b.description}
+                <p className="mt-2 text-sm leading-relaxed text-white/65">
+                  {pillar.description}
                 </p>
               </div>
             </Reveal>

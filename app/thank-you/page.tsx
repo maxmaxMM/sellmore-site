@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Container from "../components/Container";
+import { DEMO_DISPLAY, DEMO_TEL, WHATSAPP_URL } from "../lib/site";
 
 export default function ThankYouPage() {
   return (
@@ -52,8 +53,24 @@ export default function ThankYouPage() {
             Thanks — your photo has been received.
           </h1>
           <p className="relative mx-auto mt-4 max-w-md text-white/65">
-            We&apos;ll send your preview within 24 hours to the email you
-            provided. Keep an eye on your inbox.
+            Sell More Studio will send your preview within 24 hours to the
+            email you provided. Keep an eye on your inbox.
+          </p>
+          <p className="relative mx-auto mt-3 max-w-md text-sm text-white/50">
+            Prefer to talk it through?{" "}
+            <a href={DEMO_TEL} className="text-[#fde68a] underline underline-offset-4">
+              Call {DEMO_DISPLAY}
+            </a>{" "}
+            or{" "}
+            <a
+              href={WHATSAPP_URL}
+              className="text-[#86efac] underline underline-offset-4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp us
+            </a>
+            .
           </p>
 
           <div className="relative mt-8 flex flex-wrap justify-center gap-3">

@@ -2,82 +2,52 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import {
-  useCallback,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type DragEvent,
-  type FormEvent,
-} from "react";
+import { useRef, useState } from "react";
 import Container from "../components/Container";
 import Reveal from "../components/Reveal";
-
-const businessTypes = [
-  "Food & Drink",
-  "Beauty",
-  "Real Estate",
-  "Services",
-  "Fitness",
-  "Retail",
-  "Other",
-];
+import {
+  FORM_FIELDS,
+  FORM_IFRAME_NAME,
+  GOOGLE_FORM_ACTION,
+  NO_IMAGE_LINK,
+} from "../lib/google-form";
+import { businessTypes } from "../lib/site";
 
 export default function GetStartedPage() {
   const reduce = useReducedMotion();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [dragOver, setDragOver] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [imageLink, setImageLink] = useState("");
+  const [sentWithImage, setSentWithImage] = useState(false);
 
-  const fileInput = useRef<HTMLInputElement | null>(null);
+  const posted = useRef(false);
 
-  const handleFile = useCallback((f: File | null) => {
-    if (!f) {
-      setFile(null);
-      setPreview(null);
-      return;
-    }
-    if (!f.type.startsWith("image/")) {
-      setError("Please upload an image file.");
-      return;
-    }
-    if (f.size > 15 * 1024 * 1024) {
-      setError("Image must be under 15 MB.");
-      return;
-    }
-    setError(null);
-    setFile(f);
-    const reader = new FileReader();
-    reader.onload = () => setPreview(reader.result as string);
-    reader.readAsDataURL(f);
-  }, []);
-
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0] ?? null;
-    handleFile(f);
-  };
-
-  const onDrop = (e: DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    setDragOver(false);
-    const f = e.dataTransfer.files?.[0] ?? null;
-    handleFile(f);
-  };
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // Native POST into the existing Google Form. Do not preventDefault.
+  const onSubmit = () => {
+    setSentWithImage(imageLink.trim().length > 0);
+    posted.current = true;
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 900));
-    setSubmitting(false);
-    setSubmitted(true);
+    window.setTimeout(() => {
+      if (posted.current) setSubmitted(true);
+    }, 1500);
+  };
+
+  const onIframeLoad = () => {
+    if (posted.current) setSubmitted(true);
   };
 
   return (
     <section className="relative pt-10 pb-24 md:pt-16 md:pb-32">
       <div className="pointer-events-none absolute left-1/2 top-[-10%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.22),transparent_70%)] blur-2xl" />
+
+      <iframe
+        name={FORM_IFRAME_NAME}
+        title="Google Forms submission"
+        onLoad={onIframeLoad}
+        aria-hidden
+        tabIndex={-1}
+        className="hidden"
+      />
 
       <Container className="relative">
         <div className="mx-auto max-w-2xl">
@@ -100,22 +70,26 @@ export default function GetStartedPage() {
                       Tell us about your business
                     </h1>
                     <p className="mx-auto mt-3 max-w-md text-white/60">
-                      We&apos;ll help you set up review requests, instant replies
-                      and follow-up automation for your business.
+                      Massage clinics, nail salons, beauty salons, barbershops
+                      and other local services — share a few details, and a
+                      public photo link if you have one.
                     </p>
                   </div>
                 </Reveal>
 
                 <Reveal delay={0.1} className="mt-10">
                   <form
+                    action={GOOGLE_FORM_ACTION}
+                    method="POST"
+                    target={FORM_IFRAME_NAME}
+                    encType="application/x-www-form-urlencoded"
                     onSubmit={onSubmit}
                     className="card p-6 sm:p-8 space-y-5"
-                    noValidate
                   >
                     <Field
                       label="Business name"
-                      name="business_name"
-                      placeholder="e.g. Nonna's Kitchen"
+                      name={FORM_FIELDS.businessName}
+                      placeholder="e.g. a massage clinic in Brisbane"
                       required
                     />
 
@@ -123,7 +97,7 @@ export default function GetStartedPage() {
                       <Label>Business type</Label>
                       <div className="relative">
                         <select
-                          name="business_type"
+                          name={FORM_FIELDS.businessType}
                           required
                           defaultValue=""
                           className="peer w-full appearance-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white outline-none ring-0 transition-colors focus:border-[#60a5fa]/60 focus:bg-white/[0.05]"
@@ -154,102 +128,43 @@ export default function GetStartedPage() {
 
                     <Field
                       label="Promotion / offer"
-                      name="offer"
-                      placeholder="e.g. $18 truffle pasta — today only"
+                      name={FORM_FIELDS.offer}
+                      placeholder="e.g. 60-minute remedial massage"
                       required
                     />
 
                     <div>
-                      <Label>Upload photo</Label>
-                      <label
-                        htmlFor="photo"
-                        onDragOver={(e) => {
-                          e.preventDefault();
-                          setDragOver(true);
-                        }}
-                        onDragLeave={() => setDragOver(false)}
-                        onDrop={onDrop}
-                        className={`relative flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-6 py-8 text-center transition-colors ${
-                          dragOver
-                            ? "border-[#60a5fa]/70 bg-[#60a5fa]/5"
-                            : "border-white/15 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.04]"
-                        }`}
-                      >
-                        <input
-                          ref={fileInput}
-                          id="photo"
-                          name="photo"
-                          type="file"
-                          accept="image/*"
-                          onChange={onFileChange}
-                          className="sr-only"
-                          required
-                        />
-                        {preview ? (
-                          <div className="flex items-center gap-4">
-                            {/* preview thumbnail */}
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={preview}
-                              alt="Uploaded preview"
-                              className="h-20 w-20 rounded-lg object-cover ring-1 ring-white/10"
-                            />
-                            <div className="text-left">
-                              <div className="text-sm font-medium text-white">
-                                {file?.name}
-                              </div>
-                              <div className="text-xs text-white/50">
-                                {(file && (file.size / 1024 / 1024).toFixed(2)) ||
-                                  0}{" "}
-                                MB · Click to replace
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <>
-                            <div className="grid h-10 w-10 place-items-center rounded-full bg-white/5 ring-1 ring-inset ring-white/10">
-                              <svg
-                                viewBox="0 0 24 24"
-                                className="h-5 w-5 text-white/70"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.8"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                aria-hidden
-                              >
-                                <path d="M12 16V4" />
-                                <path d="M6 10l6-6 6 6" />
-                                <path d="M4 20h16" />
-                              </svg>
-                            </div>
-                            <div>
-                              <div className="text-sm font-medium text-white">
-                                Drop a photo here, or click to upload
-                              </div>
-                              <div className="text-xs text-white/50">
-                                PNG, JPG or HEIC up to 15 MB
-                              </div>
-                            </div>
-                          </>
-                        )}
-                      </label>
-                      {error ? (
-                        <p className="mt-2 text-xs text-[#fca5a5]">{error}</p>
-                      ) : null}
+                      <Label>Image link</Label>
+                      <input
+                        type="url"
+                        inputMode="url"
+                        value={imageLink}
+                        onChange={(event) => setImageLink(event.target.value)}
+                        placeholder="Paste a public Google Drive, Dropbox, or image URL"
+                        className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white placeholder:text-white/35 outline-none transition-colors focus:border-[#60a5fa]/60 focus:bg-white/[0.05]"
+                      />
+                      <input
+                        type="hidden"
+                        name={FORM_FIELDS.imageLink}
+                        value={imageLink.trim() || NO_IMAGE_LINK}
+                      />
+                      <p className="mt-2 text-xs text-white/50">
+                        Optional. Leave this blank if you don&apos;t have a
+                        public photo link yet — we can still take the enquiry.
+                      </p>
                     </div>
 
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field
                         label="Phone / WhatsApp"
-                        name="phone"
+                        name={FORM_FIELDS.phone}
                         type="tel"
-                        placeholder="+1 555 000 0000"
+                        placeholder="04xx xxx xxx"
                         required
                       />
                       <Field
                         label="Email"
-                        name="email"
+                        name={FORM_FIELDS.email}
                         type="email"
                         placeholder="you@business.com"
                         required
@@ -269,7 +184,7 @@ export default function GetStartedPage() {
                           </>
                         ) : (
                           <>
-                            Send my photo
+                            Send my details
                             <svg
                               viewBox="0 0 20 20"
                               className="h-4 w-4"
@@ -325,11 +240,12 @@ export default function GetStartedPage() {
                   </svg>
                 </div>
                 <h2 className="relative text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-gradient">
-                  Thanks — your photo has been received.
+                  Thanks — your details have been received.
                 </h2>
                 <p className="relative mx-auto mt-4 max-w-md text-white/65">
-                  We&apos;ll send your preview within 24 hours to the email you
-                  provided. Keep an eye on your inbox.
+                  {sentWithImage
+                    ? "We'll send your preview within 24 hours to the email you provided. Keep an eye on your inbox."
+                    : "We'll reply to the email you provided. You can send a photo link whenever it's ready."}
                 </p>
                 <div className="relative mt-8 flex flex-wrap justify-center gap-3">
                   <Link href="/" className="btn-secondary">
