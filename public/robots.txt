@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sellmorestudio.com/sitemap.xml
+Sitemap: https://www.sellmorestudio.com/sitemap.xml

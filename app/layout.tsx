@@ -18,7 +18,7 @@ const description =
   "Sell More Studio helps Brisbane and Australian massage clinics, nail salons, beauty salons and barbershops get more bookings, miss fewer calls, follow up with customers, collect Google reviews and post consistently. Prices in AUD.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sellmorestudio.com"),
+  metadataBase: new URL("https://www.sellmorestudio.com"),
   title: {
     default:
       "Sell More Studio | Bookings, missed calls and reviews for local businesses",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title:
       "Sell More Studio | Bookings, missed calls and reviews for local businesses",
     description,
-    url: "https://sellmorestudio.com",
+    url: "https://www.sellmorestudio.com",
     siteName: "Sell More Studio",
     locale: "en_AU",
     type: "website",
@@ -54,8 +54,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "Sell More Studio",
-  url: "https://sellmorestudio.com",
-  image: "https://sellmorestudio.com/sellmore-logo.png",
+  url: "https://www.sellmorestudio.com",
+  image: "https://www.sellmorestudio.com/sellmore-logo.png",
   email: "sellmorestudiosupport@gmail.com",
   telephone: "+61421435858",
   description,
