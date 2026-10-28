@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useRef, useState, type FormEvent } from "react";
 import Container from "../components/Container";
 import Reveal from "../components/Reveal";
 import {
@@ -11,7 +12,8 @@ import {
   GOOGLE_FORM_ACTION,
   NO_IMAGE_LINK,
 } from "../lib/google-form";
-import { businessTypes } from "../lib/site";
+import { sendEnquiry } from "../lib/enquiry";
+import { businessTypes, services } from "../lib/site";
 
 export default function GetStartedPage() {
   const reduce = useReducedMotion();
@@ -20,10 +22,27 @@ export default function GetStartedPage() {
   const [imageLink, setImageLink] = useState("");
   const [sentWithImage, setSentWithImage] = useState(false);
 
+  const honeypot = useRef<HTMLInputElement>(null);
+
   const posted = useRef(false);
 
   // Native POST into the existing Google Form. Do not preventDefault.
-  const onSubmit = () => {
+  // A copy also goes to GHL (via n8n) with the visitor's first landing page and UTM.
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const data = new FormData(event.currentTarget);
+    const value = (name: string) => String(data.get(name) ?? "");
+    sendEnquiry({
+      business_name: value(FORM_FIELDS.businessName),
+      business_type: value(FORM_FIELDS.businessType),
+      offer: value(FORM_FIELDS.offer),
+      image_link: imageLink.trim(),
+      phone: value(FORM_FIELDS.phone),
+      email: value(FORM_FIELDS.email),
+      service:
+        event.currentTarget.querySelector<HTMLSelectElement>("select[data-field=service]")
+          ?.value ?? "",
+      hp: honeypot.current?.value ?? "",
+    });
     setSentWithImage(imageLink.trim().length > 0);
     posted.current = true;
     setSubmitting(true);
@@ -125,6 +144,22 @@ export default function GetStartedPage() {
                         </svg>
                       </div>
                     </div>
+
+                    <div>
+                      <Label>What would you like help with?</Label>
+                      <Suspense fallback={<ServiceSelect />}>
+                        <PresetServiceSelect />
+                      </Suspense>
+                    </div>
+
+                    <input
+                      ref={honeypot}
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden
+                      className="hidden"
+                    />
 
                     <Field
                       label="Promotion / offer"
@@ -261,6 +296,47 @@ export default function GetStartedPage() {
         </div>
       </Container>
     </section>
+  );
+}
+
+// Service pages link here with ?service=<id> so the enquiry arrives pre-labelled.
+function PresetServiceSelect() {
+  const id = useSearchParams().get("service");
+  const preset = services.find((s) => s.id === id)?.name ?? "";
+  return <ServiceSelect defaultValue={preset} />;
+}
+
+// No name attribute: the choice is sent to GHL only, not to the Google Form.
+function ServiceSelect({ defaultValue = "" }: { defaultValue?: string }) {
+  return (
+    <div className="relative">
+      <select
+        data-field="service"
+        defaultValue={defaultValue}
+        className="peer w-full appearance-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white outline-none ring-0 transition-colors focus:border-[#60a5fa]/60 focus:bg-white/[0.05]"
+      >
+        <option value="" className="bg-[#0b0e17]">
+          Not sure yet
+        </option>
+        {services.map((s) => (
+          <option key={s.id} value={s.name} className="bg-[#0b0e17]">
+            {s.name}
+          </option>
+        ))}
+      </select>
+      <svg
+        viewBox="0 0 20 20"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="M5 8l5 5 5-5" />
+      </svg>
+    </div>
   );
 }
 

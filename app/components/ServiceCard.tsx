@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CtaRow from "./CtaRow";
 import PricePanel from "./PricePanel";
 import type { Service } from "../lib/site";
@@ -31,6 +32,15 @@ export default function ServiceCard({
           <span className="font-semibold text-white">The problem. </span>
           {service.problem}
         </p>
+
+        {service.page ? (
+          <Link
+            href={service.page.href}
+            className="text-sm font-medium text-[#93c5fd] underline-offset-4 hover:underline"
+          >
+            {service.page.label} →
+          </Link>
+        ) : null}
 
         <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
           <div>

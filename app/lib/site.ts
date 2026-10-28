@@ -69,6 +69,8 @@ export type Service = {
   /** Shown in the pricing comparison. Setup and monthly stay in separate cells. */
   scan: { setup: string; monthly: string; merge?: string };
   emphasis: CtaEmphasis;
+  /** Dedicated service page, linked from the card. */
+  page?: { href: string; label: string };
 };
 
 export const services: Service[] = [
@@ -115,6 +117,7 @@ export const services: Service[] = [
     },
     scan: { setup: "", monthly: "", merge: "Custom Quote · Live Demo Available" },
     emphasis: "demo",
+    page: { href: "/ai-receptionist-brisbane", label: "How the AI receptionist works" },
   },
   {
     id: "text-reply",
