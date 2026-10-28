@@ -97,6 +97,7 @@ export const services: Service[] = [
     price: { type: "setup-monthly", setup: "A$499", monthly: "A$99" },
     scan: { setup: "A$499", monthly: "A$99/month" },
     emphasis: "sample",
+    page: { href: "/online-booking-system-brisbane", label: "How the online booking system works" },
   },
   {
     id: "receptionist",
