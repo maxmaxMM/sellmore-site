@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useRef, useState, type FormEvent } from "react";
 import Container from "../components/Container";
 import Reveal from "../components/Reveal";
 import {
@@ -11,20 +12,31 @@ import {
   GOOGLE_FORM_ACTION,
   NO_IMAGE_LINK,
 } from "../lib/google-form";
-import { businessTypes } from "../lib/site";
+import { sendEnquiry } from "../lib/enquiry";
+import { BOOK_CALL_URL, businessTypes, services } from "../lib/site";
 
 export default function GetStartedPage() {
   const reduce = useReducedMotion();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [imageLink, setImageLink] = useState("");
-  const [sentWithImage, setSentWithImage] = useState(false);
+
+  const honeypot = useRef<HTMLInputElement>(null);
 
   const posted = useRef(false);
 
   // Native POST into the existing Google Form. Do not preventDefault.
-  const onSubmit = () => {
-    setSentWithImage(imageLink.trim().length > 0);
+  // A copy also goes to GHL (via n8n) with the visitor's first landing page and UTM.
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const data = new FormData(event.currentTarget);
+    const value = (name: string) => String(data.get(name) ?? "");
+    sendEnquiry({
+      business_name: value(FORM_FIELDS.businessName),
+      business_type: value(FORM_FIELDS.businessType),
+      service: value(FORM_FIELDS.offer),
+      phone: value(FORM_FIELDS.phone),
+      email: value(FORM_FIELDS.email),
+      hp: honeypot.current?.value ?? "",
+    });
     posted.current = true;
     setSubmitting(true);
     window.setTimeout(() => {
@@ -37,7 +49,7 @@ export default function GetStartedPage() {
   };
 
   return (
-    <section className="relative pt-10 pb-24 md:pt-16 md:pb-32">
+    <section className="relative overflow-hidden pt-10 pb-24 md:pt-16 md:pb-32">
       <div className="pointer-events-none absolute left-1/2 top-[-10%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.22),transparent_70%)] blur-2xl" />
 
       <iframe
@@ -71,8 +83,8 @@ export default function GetStartedPage() {
                     </h1>
                     <p className="mx-auto mt-3 max-w-md text-white/60">
                       Massage clinics, nail salons, beauty salons, barbershops
-                      and other local services — share a few details, and a
-                      public photo link if you have one.
+                      and other local services. Leave your details and Max
+                      will get back to you within one business day.
                     </p>
                   </div>
                 </Reveal>
@@ -126,33 +138,24 @@ export default function GetStartedPage() {
                       </div>
                     </div>
 
-                    <Field
-                      label="Promotion / offer"
-                      name={FORM_FIELDS.offer}
-                      placeholder="e.g. 60-minute remedial massage"
-                      required
+                    <div>
+                      <Label>What would you like help with?</Label>
+                      <Suspense fallback={<ServiceSelect />}>
+                        <PresetServiceSelect />
+                      </Suspense>
+                    </div>
+
+                    <input
+                      ref={honeypot}
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden
+                      className="hidden"
                     />
 
-                    <div>
-                      <Label>Image link</Label>
-                      <input
-                        type="url"
-                        inputMode="url"
-                        value={imageLink}
-                        onChange={(event) => setImageLink(event.target.value)}
-                        placeholder="Paste a public Google Drive, Dropbox, or image URL"
-                        className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white placeholder:text-white/35 outline-none transition-colors focus:border-[#60a5fa]/60 focus:bg-white/[0.05]"
-                      />
-                      <input
-                        type="hidden"
-                        name={FORM_FIELDS.imageLink}
-                        value={imageLink.trim() || NO_IMAGE_LINK}
-                      />
-                      <p className="mt-2 text-xs text-white/50">
-                        Optional. Leave this blank if you don&apos;t have a
-                        public photo link yet — we can still take the enquiry.
-                      </p>
-                    </div>
+                    {/* The Google Form still requires an image link; this page no longer asks for one. */}
+                    <input type="hidden" name={FORM_FIELDS.imageLink} value={NO_IMAGE_LINK} />
 
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field
@@ -184,7 +187,7 @@ export default function GetStartedPage() {
                           </>
                         ) : (
                           <>
-                            Send my details
+                            Get in touch
                             <svg
                               viewBox="0 0 20 20"
                               className="h-4 w-4"
@@ -202,8 +205,8 @@ export default function GetStartedPage() {
                         )}
                       </button>
                       <p className="mt-3 text-center text-xs text-white/45">
-                        By submitting you agree to receive updates about your
-                        preview. No credit card required.
+                        By submitting you agree that Sell More Studio may contact
+                        you by phone, SMS or email about your enquiry.
                       </p>
                     </div>
                   </form>
@@ -243,15 +246,19 @@ export default function GetStartedPage() {
                   Thanks — your details have been received.
                 </h2>
                 <p className="relative mx-auto mt-4 max-w-md text-white/65">
-                  {sentWithImage
-                    ? "We'll send your preview within 24 hours to the email you provided. Keep an eye on your inbox."
-                    : "We'll reply to the email you provided. You can send a photo link whenever it's ready."}
+                  Max will get back to you within one business day. Want to
+                  talk sooner? Pick a time for a 15-minute call.
                 </p>
                 <div className="relative mt-8 flex flex-wrap justify-center gap-3">
-                  <Link href="/" className="btn-secondary">
-                    Back to home
-                  </Link>
-                  <Link href="/#pricing" className="btn-primary">
+                  <a
+                    href={BOOK_CALL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                  >
+                    Book a 15-minute call
+                  </a>
+                  <Link href="/#pricing" className="btn-secondary">
                     See pricing
                   </Link>
                 </div>
@@ -261,6 +268,47 @@ export default function GetStartedPage() {
         </div>
       </Container>
     </section>
+  );
+}
+
+// Service pages link here with ?service=<id> so the enquiry arrives pre-labelled.
+function PresetServiceSelect() {
+  const id = useSearchParams().get("service");
+  const preset = services.find((s) => s.id === id)?.name ?? "Not sure yet";
+  return <ServiceSelect defaultValue={preset} />;
+}
+
+// Stored in the Google Form's old "Promotion / offer" column, and sent to GHL.
+function ServiceSelect({ defaultValue = "Not sure yet" }: { defaultValue?: string }) {
+  return (
+    <div className="relative">
+      <select
+        name={FORM_FIELDS.offer}
+        defaultValue={defaultValue}
+        className="peer w-full appearance-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white outline-none ring-0 transition-colors focus:border-[#60a5fa]/60 focus:bg-white/[0.05]"
+      >
+        <option value="Not sure yet" className="bg-[#0b0e17]">
+          Not sure yet
+        </option>
+        {services.map((s) => (
+          <option key={s.id} value={s.name} className="bg-[#0b0e17]">
+            {s.name}
+          </option>
+        ))}
+      </select>
+      <svg
+        viewBox="0 0 20 20"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="M5 8l5 5 5-5" />
+      </svg>
+    </div>
   );
 }
 
