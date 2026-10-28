@@ -29,11 +29,19 @@ function read(): FirstTouch | null {
   }
 }
 
+function sameSite(url: string) {
+  try {
+    return new URL(url).host === window.location.host;
+  } catch {
+    return false;
+  }
+}
+
 function current(): FirstTouch {
   const query = new URLSearchParams(window.location.search);
   const touch: FirstTouch = {
     landing_page: window.location.pathname,
-    referrer: document.referrer,
+    referrer: sameSite(document.referrer) ? "" : document.referrer,
     first_seen: new Date().toISOString(),
   };
   for (const name of PARAMS) {

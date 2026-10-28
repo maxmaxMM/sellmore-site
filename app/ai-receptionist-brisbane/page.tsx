@@ -3,7 +3,7 @@ import Link from "next/link";
 import Container from "../components/Container";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
-import { DEMO_DISPLAY, DEMO_TEL } from "../lib/site";
+import { BOOK_CALL_URL, DEMO_DISPLAY, DEMO_TEL } from "../lib/site";
 
 const PAGE_URL = "https://www.sellmorestudio.com/ai-receptionist-brisbane";
 const QUOTE_HREF = "/get-started?service=receptionist";
@@ -342,6 +342,14 @@ export default function AiReceptionistBrisbane() {
               <Link href={QUOTE_HREF} className="btn-secondary">
                 Get a quote
               </Link>
+              <a
+                href={BOOK_CALL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                Book a 15-minute call with Max
+              </a>
             </div>
             <p className="mt-6 text-sm text-white/45">
               Sell More Studio is based in Brisbane and works with massage

@@ -5,6 +5,9 @@ export const DEMO_TEL = "tel:+61485023626";
 export const DEMO_DISPLAY = "0485 023 626";
 export const EMAIL = "sellmorestudiosupport@gmail.com";
 export const GOOGLE_CHECK_HREF = "/checkup.html?src=home";
+/** GHL calendar "Sell More Studio Demo Call" (15 min with Max). */
+export const BOOK_CALL_URL =
+  "https://link.sellmorestudio.com/widget/bookings/sell-more-studio-demo-call";
 
 export const INDUSTRIES = [
   "Massage Clinics",

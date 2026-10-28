@@ -8,8 +8,6 @@ export const ENQUIRY_WEBHOOK =
 export type Enquiry = {
   business_name: string;
   business_type: string;
-  offer: string;
-  image_link: string;
   phone: string;
   email: string;
   service: string;
