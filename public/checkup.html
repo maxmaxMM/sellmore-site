@@ -61,7 +61,7 @@ var sel={id:'',tok:''},tokShop=uuid(),tokSub=uuid();
 function setPh(){g('shop').placeholder=T[L].phShop;g('suburb').placeholder=T[L].phSub}
 function setLang(l){L=l;document.querySelectorAll('[data-zh]').forEach(function(e){e.textContent=e.getAttribute('data-'+l)});g('bzh').className=l=='zh'?'on':'';g('ben').className=l=='en'?'on':'';document.documentElement.lang=l;setPh();if(last)render(last)}
 g('bzh').onclick=function(){setLang('zh')};g('ben').onclick=function(){setLang('en')};
-if((navigator.language||'').toLowerCase().indexOf('zh')!==0)setLang('en');else setPh();
+var QL=(new URLSearchParams(location.search).get('lang')||'').toLowerCase();if(QL==='zh')setPh();else if(QL==='en'||(navigator.language||'').toLowerCase().indexOf('zh')!==0)setLang('en');else setPh();
 var BAD={locality:1,political:1,route:1,street_address:1,postal_code:1,sublocality:1,neighborhood:1,administrative_area_level_1:1,administrative_area_level_2:1,country:1};
 function isArea(t){for(var i=0;t&&i<t.length;i++){if(BAD[t[i]])return true}return false}
 function makeAC(inp,box,kind,getTok,onPick,onType,canQuery){
